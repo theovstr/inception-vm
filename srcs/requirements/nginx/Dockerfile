@@ -3,7 +3,7 @@ FROM debian:bookworm
 RUN apt-get update && apt-get upgrade -y
 
     
-RUN apt-get install -y nginx openssl netcat-openbsd && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y nginx openssl && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /etc/ssl/private /etc/ssl/certs
 
