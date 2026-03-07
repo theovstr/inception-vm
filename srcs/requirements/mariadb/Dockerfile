@@ -2,9 +2,9 @@ FROM debian:bookworm
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -y mariadb-server vim zsh
+RUN apt-get install -y mariadb-server
 
-COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+RUN sed -i 's/^bind-address\s*=\s*127\.0\.0\.1/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY tools/mariadb.sh /
 

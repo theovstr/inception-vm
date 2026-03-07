@@ -1,15 +1,15 @@
 all: start
 
 start:
-	mkdir -p /home/theveste/data/mariadb
-	mkdir -p /home/theveste/data/wordpress
+	mkdir -p /Users/hiro/data/mariadb
+	mkdir -p /Users/hiro/data/wordpress
 	docker compose --project-directory srcs up --build
 
 stop:
 	docker compose --project-directory srcs down
 
 delete:
-	 sudo rm -rf /home/theveste/data/*
+	 sudo rm -rf /Users/hiro/data/*
 
 supp:
 	docker container rm -f mariadb

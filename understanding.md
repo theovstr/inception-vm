@@ -1,0 +1,13 @@
+# Inception — Understanding
+
+## MariaDB bind-address: 127.0.0.1 → 0.0.0.0
+
+Debian's default `50-server.cnf` sets `bind-address = 127.0.0.1`, so MariaDB only listens on localhost. In Docker, WordPress runs in a separate container and connects over the network (`mariadb:3306`). With 127.0.0.1, MariaDB would reject those connections. Setting `bind-address = 0.0.0.0` makes it listen on all interfaces so other containers can connect.
+
+## MariaDB: run mysqld as mysql user, not root
+
+MariaDB refuses to run as root and aborts with "Please consult the Knowledge Base to find out how to run mysqld as root!". The container runs as root by default, so `exec mysqld` fails. We use `exec mysqld --user=mysql` so mysqld runs as the `mysql` user and starts correctly.
+
+## MariaDB: why mysqld must be PID 1
+
+In Docker, the process with PID 1 is the main process. When you `docker stop`, Docker sends SIGTERM to PID 1. If PID 1 exits, the container stops. We kill the temporary MariaDB (started by `service mariadb start`), then `exec mysqld` so mysqld becomes PID 1—it receives signals correctly and keeps the container alive.
