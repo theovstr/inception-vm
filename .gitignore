@@ -1,0 +1,6 @@
+srcs/my_volume
+.env
+data/
+secrets/
+correction.txt
+.DS_Store

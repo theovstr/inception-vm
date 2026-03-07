@@ -1,0 +1,79 @@
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  credentials:
+    file: ../secrets/credentials.txt
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/theveste/data/mariadb
+
+
+  wp:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: /home/theveste/data/wordpress
+
+
+services:
+
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb
+    restart: always
+    networks:
+      - inception
+    volumes:
+      - db:/var/lib/mysql
+    secrets:
+      - db_password
+      - db_root_password
+      - credentials
+
+
+
+  wordpress:
+    container_name: wordpress
+    build: requirements/wordpress
+    restart: always
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+    volumes:
+      - wp:/var/www/html
+    expose:
+      - "9000"
+    secrets:
+      - db_password
+      - credentials
+    stdin_open: true
+    tty: true
+
+
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/.
+    restart: always
+    volumes:
+     - wp:/var/www/html
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    networks:
+      - inception
+
+
+networks:
+  inception:
+    name : inception
+    driver : bridge
