@@ -11,3 +11,11 @@ MariaDB refuses to run as root and aborts with "Please consult the Knowledge Bas
 ## MariaDB: why mysqld must be PID 1
 
 In Docker, the process with PID 1 is the main process. When you `docker stop`, Docker sends SIGTERM to PID 1. If PID 1 exits, the container stops. We kill the temporary MariaDB (started by `service mariadb start`), then `exec mysqld` so mysqld becomes PID 1—it receives signals correctly and keeps the container alive.
+
+## NGINX: self-signed SSL certificate
+
+The Inception subject requires NGINX on port 443 only, with a TLS v1.2/v1.3 certificate. We generate a self-signed cert with `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ... -out ... -subj "/CN=login.42.fr"`. `-x509` creates the cert, `-nodes` skips passphrase (needed for unattended start), `-subj` avoids prompts. The subject allows self-signed certs (browser warning is ok). NGINX needs `ssl_certificate` and `ssl_certificate_key` in its config to serve HTTPS.
+
+## NGINX: COPY nginx.conf
+
+`apt install nginx` creates `/etc/nginx/` with a default config (port 80, static HTML). We `COPY conf/nginx.conf /etc/nginx/nginx.conf` to replace it with our custom config: port 443 only, SSL, WordPress root, PHP-FPM proxy to wordpress:9000.

@@ -12,11 +12,7 @@ delete:
 	 sudo rm -rf /Users/hiro/data/*
 
 supp:
-	docker container rm -f mariadb
-	docker container rm -f wordpress
-	docker container rm -f nginx
-	docker volume rm srcs_db
-	docker volume rm srcs_wp
+	docker compose --project-directory srcs down -v
 	docker system prune -af
 
 
