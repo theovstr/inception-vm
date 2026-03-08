@@ -30,6 +30,8 @@ Resources
 - [WordPress](https://wordpress.org/support/)
 - [MariaDB](https://mariadb.org/documentation/)
 
+AI was used to debug configuration issues (e.g. MariaDB root password, database creation order), review the project against the subject requirements, and draft the documentation. All generated content was reviewed and understood before use.
+
 Project description
 
 Docker: NGINX serves the site over HTTPS (port 443 only). WordPress runs PHP-FPM and connects to MariaDB. MariaDB stores all the site data.

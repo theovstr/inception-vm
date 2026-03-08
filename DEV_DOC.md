@@ -7,27 +7,20 @@ Prerequisites: Docker, Docker Compose, Git.
 Setup from scratch
 
 1. Clone the repo
-
-```
 git clone <your-repo-url>
 cd inception
-```
+
 
 2. Create the secrets folder
-
-```
 mkdir -p secrets
-```
+
 
 3. Create required secret files
-
 secrets/db_password.txt: One line, the password for the MariaDB user.
-
 secrets/db_root_password.txt: One line, the root password for MariaDB.
-
 secrets/credentials.txt: One variable per line, for example:
 
-```
+
 BDD_USER=
 BDD_NAME=
 DOMAIN_NAME=
@@ -38,38 +31,30 @@ TITLE=inception
 WP_USER_EMAIL=
 WP_USER=
 WP_USER_PASSWORD=
-```
+
 
 Replace theveste with your 42 login if needed. The admin username must not contain Admin admin, administrator, Administrator, admin-123, andso forth
 
 4. Add hosts entry
 
 Add to /etc/hosts:
-
-```
 127.0.0.1 theveste.42.fr
-```
+
 
 5. Create data directories
 
-```
-mkdir -p /Users/hiro/data/mariadb
-mkdir -p /Users/hiro/data/wordpress
-```
+mkdir -p /home/theveste/data/mariadb
+mkdir -p /home/theveste/data/wordpress
+
 
 If you're on a 42 VM, use /home/<your-login>/data/ instead and update the paths in docker-compose.yml and the Makefile.
 
 Build and run
-
-```
 make
-```
 
 or
-
-```
 make start
-```
+
 
 This builds the images and starts all containers. The first run can take a few minutes while WordPress installs.
 
@@ -87,13 +72,13 @@ Containers: mariadb (database), wordpress (WordPress + PHP-FPM), nginx (only ent
 
 Volumes: db (MariaDB data), wp (WordPress files). Both are persistent.
 
-Data is stored in /Users/hiro/data/mariadb and /Users/hiro/data/wordpress (or /home/<login>/data/ on a 42 VM).
+Data is stored in /home/theveste/data/mariadb and /home/theveste/data/wordpress (or /home/<login>/data/ on a 42 VM).
 
 Persistence: After make stop the data stays. When you run make start again the containers use the same data. To wipe everything run make supp, then recreate the data directories and run make start again for a fresh install.
 
 Project structure
 
-```
+
 inception/
 ├── Makefile
 ├── README.md
@@ -118,7 +103,6 @@ inception/
             ├── Dockerfile
             └── conf/
                 └── wordpress.sh
-```
 
 Debugging
 

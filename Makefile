@@ -1,15 +1,15 @@
 all: start
 
 start:
-	mkdir -p /Users/hiro/data/mariadb
-	mkdir -p /Users/hiro/data/wordpress
+	mkdir -p /home/theveste/data/mariadb
+	mkdir -p /home/theveste/data/wordpress
 	docker compose -f srcs/docker-compose.yml up --build
 
 stop:
 	docker compose -f srcs/docker-compose.yml down
 
 delete:
-	 sudo rm -rf /Users/hiro/data/*
+	 sudo rm -rf /home/theveste/data/*
 
 supp:
 	docker compose -f srcs/docker-compose.yml down -v

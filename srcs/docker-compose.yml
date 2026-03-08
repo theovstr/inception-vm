@@ -1,10 +1,10 @@
 secrets:
   db_password:
-    file: /Users/hiro/inception/secrets/db_password.txt
+    file: ../secrets/db_password.txt
   db_root_password:
-    file: /Users/hiro/inception/secrets/db_root_password.txt
+    file: ../secrets/db_root_password.txt
   credentials:
-    file: /Users/hiro/inception/secrets/credentials.txt
+    file: ../secrets/credentials.txt
 
 volumes:
   db:
@@ -12,7 +12,7 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: /Users/hiro/data/mariadb
+      device: /home/theveste/data/mariadb
 
 
   wp:
@@ -20,7 +20,7 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: /Users/hiro/data/wordpress
+      device: /home/theveste/data/wordpress
 
 
 services:
