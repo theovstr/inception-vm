@@ -61,7 +61,7 @@ services:
 
   nginx:
     container_name: nginx
-    build: requirements/nginx/.
+    build: requirements/nginx/
     restart: always
     volumes:
      - wp:/var/www/html
