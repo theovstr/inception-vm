@@ -4,3 +4,4 @@ data/
 secrets/
 correction.txt
 .DS_Store
+.cursor/

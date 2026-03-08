@@ -19,3 +19,7 @@ The Inception subject requires NGINX on port 443 only, with a TLS v1.2/v1.3 cert
 ## NGINX: COPY nginx.conf
 
 `apt install nginx` creates `/etc/nginx/` with a default config (port 80, static HTML). We `COPY conf/nginx.conf /etc/nginx/nginx.conf` to replace it with our custom config: port 443 only, SSL, WordPress root, PHP-FPM proxy to wordpress:9000.
+
+## NGINX: server block (subject + security)
+
+**Subject:** `listen 443 ssl` only (no port 80), `ssl_protocols TLSv1.2 TLSv1.3`, `ssl_certificate`/`ssl_certificate_key`. `root /var/www/html/wordpress`, `try_files` for WordPress routing, `location ~ \.php$` with `fastcgi_pass wordpress:9000` for PHP. **Security:** `location ~ (\.\.|^/etc/)` blocks path traversal (404). `location = /wp-config.php` blocks direct access to config (404).
