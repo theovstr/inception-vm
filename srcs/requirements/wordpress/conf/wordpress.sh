@@ -32,7 +32,7 @@ chown -R www-data:www-data /var/www/html/wordpress
 echo "[========WP INSTALLATION STARTED========]"
 find /var/www/html/wordpress/ -mindepth 1 -delete
 
-# Retry wp core download (network can be flaky on container startup)
+#retry wp core download
 for i in 1 2 3 4 5; do
 	if wp core download --allow-root; then
 		break
@@ -51,11 +51,6 @@ wp core install --url="$DOMAIN_NAME" --title="$TITLE" --admin_user="$WP_ADMIN_US
 wp user create "$WP_USER" "$WP_USER_EMAIL" --user_pass="$WP_USER_PASSWORD" --allow-root
 sleep 5
 
-wp plugin install contact-form-7 --activate --allow-root
-wp theme delete twentynineteen twentytwenty --allow-root
-wp plugin delete hello --allow-root
-wp plugin update --all --allow-root
-# chown -R www-data:www-data /var/www/html/wordpress/wp-content/uploads
 
 exec "$@"
 
